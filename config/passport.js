@@ -17,9 +17,9 @@ var mysql = require('mysql');
 const User = require('../models/User');
 
 var dbconfig = require('./database');
-var connection = mysql.createConnection(dbconfig.connection);
+// var connection = mysql.createConnection(dbconfig.connection);
 
-connection.query('USE ' + dbconfig.database);
+// connection.query('USE ' + dbconfig.database);
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
