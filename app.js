@@ -132,6 +132,7 @@ app.get('/person', bodyController.getPersonbyName);
 app.get('/person/:id', bodyController.getPerson);
 app.get('/image/:id', bodyController.getImage);
 app.get('/search', bodyController.search);
+app.get('/snake', passportConfig.isAuthenticated, bodyController.renderSnake);
 
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);

@@ -54,3 +54,9 @@ exports.search = (req, res, done) => {
 			res.end(JSON.stringify(data));
 		});
 }
+
+exports.renderSnake = (req, res, done) => {
+	res.render('snake', {
+		title: 'SOVRN SNAKE'
+	});
+};
