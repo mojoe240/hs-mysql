@@ -31,7 +31,6 @@ dotenv.load({ path: '.env.example' });
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const bodyController = require('./controllers/body');
-const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 
 /**
@@ -137,17 +136,6 @@ app.get('/search', bodyController.search);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
-app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
-app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
-app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
-app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
-
-app.get('/api/facebook', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getFacebook);
-app.get('/api/twitter', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getTwitter);
-app.post('/api/twitter', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postTwitter);
-app.get('/api/linkedin', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getLinkedin);
-app.get('/api/instagram', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getInstagram);
-app.get('/api/google-maps', apiController.getGoogleMaps);
 
 /**
  * OAuth authentication routes. (Sign in)
@@ -156,15 +144,6 @@ app.get('/auth/google', passport.authenticate('google', { scope: 'profile email'
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
 });
-app.get('/auth/twitter', passport.authenticate('twitter'));
-app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect(req.session.returnTo || '/');
-});
-app.get('/auth/linkedin', passport.authenticate('linkedin', { state: 'SOME STATE' }));
-app.get('/auth/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect(req.session.returnTo || '/');
-});
-
 
 /**
  * Error Handler.
