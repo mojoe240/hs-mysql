@@ -128,7 +128,7 @@ app.post('/signup', passport.authenticate('local-signup', {
   failureFlash: true // allow flash messages
 }));
 // todo add authentication middleware
-app.get('/office', bodyController.getOfficeMap);
+app.get('/office', passportConfig.isAuthenticated, bodyController.getOfficeMap);
 app.get('/person', bodyController.getPersonbyName);
 app.get('/person/:id', bodyController.getPerson);
 app.get('/image/:id', bodyController.getImage);
@@ -152,14 +152,6 @@ app.get('/api/google-maps', apiController.getGoogleMaps);
 /**
  * OAuth authentication routes. (Sign in)
  */
-app.get('/auth/instagram', passport.authenticate('instagram'));
-app.get('/auth/instagram/callback', passport.authenticate('instagram', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect(req.session.returnTo || '/');
-});
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location'] }));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect(req.session.returnTo || '/');
-});
 app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
