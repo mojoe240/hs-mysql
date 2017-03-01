@@ -30,6 +30,7 @@ dotenv.load({ path: '.env.example' });
  */
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
+const bodyController = require('./controllers/body');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 
@@ -121,11 +122,13 @@ app.post('/forgot', userController.postForgot);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
 app.get('/signup', userController.getSignup);
-app.post('/signup',passport.authenticate('local-signup', {
-		successRedirect : '/account', // redirect to the secure profile section
-		failureRedirect : '/signup', // redirect back to the signup page if there is an error
-		failureFlash : true // allow flash messages
-	}));
+app.post('/signup', passport.authenticate('local-signup', {
+  successRedirect: '/account', // redirect to the secure profile section
+  failureRedirect: '/signup', // redirect back to the signup page if there is an error
+  failureFlash: true // allow flash messages
+}));
+// todo add authentication middleware
+app.get('/office', bodyController.getOfficeMap);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
@@ -134,10 +137,6 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
-/**
- * API examples routes.
- */
-app.get('/api', apiController.getApi);
 app.get('/api/facebook', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getFacebook);
 app.get('/api/twitter', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getTwitter);
 app.post('/api/twitter', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.postTwitter);

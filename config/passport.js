@@ -315,6 +315,7 @@ passport.use(new GoogleStrategy({
   callbackURL: '/auth/google/callback',
   passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, done) => {
+  console.log(process.env.GOOGLE_ID);
   if (req.user) {
     User.findOne({ google: profile.id }, (err, existingUser) => {
       if (err) { return done(err); }
