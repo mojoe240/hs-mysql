@@ -129,7 +129,11 @@ app.post('/signup', passport.authenticate('local-signup', {
 }));
 // todo add authentication middleware
 app.get('/office', bodyController.getOfficeMap);
+app.get('/person', bodyController.getPersonbyName);
 app.get('/person/:id', bodyController.getPerson);
+app.get('/image/:id', bodyController.getImage);
+app.get('/search', bodyController.search);
+
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
