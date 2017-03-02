@@ -1,9 +1,9 @@
 // config/database.js
 module.exports = {
     'connection': {
-        'host': 'localhost',
-        'user': 'root',
-        'password': ''
+        'host': '104.154.215.101',
+        'user': 'faces',
+        'password': 'sovrn'
     },
 	'database': 'faces',
     'users_table': 'users'
